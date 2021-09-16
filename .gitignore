@@ -1,6 +1,7 @@
 package-lock.json
 auth.json
 tsconfig.tsbuildinfo
+.env
 
 node_modules
 dist

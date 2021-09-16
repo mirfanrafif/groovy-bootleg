@@ -1,5 +1,10 @@
-require('dotenv').config()
-import Discord, { Interaction, GuildMember, Snowflake } from 'discord.js'
+import * as dotenv from 'dotenv'
+import Discord, {
+	Interaction,
+	GuildMember,
+	Snowflake,
+	MessageEmbed,
+} from 'discord.js'
 import {
 	AudioPlayerStatus,
 	AudioResource,
@@ -12,7 +17,7 @@ import { MusicSubscription } from './music/subscription'
 import { searchVideo } from './lib/search'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
-// const { token } = require('../auth.json')
+const { token } = require('../auth.json')
 
 const client = new Discord.Client({
 	intents: ['GUILD_VOICE_STATES', 'GUILD_MESSAGES', 'GUILDS'],
@@ -93,56 +98,11 @@ client.on('messageCreate', async (message) => {
 					},
 				],
 			},
+			{
+				name: 'help',
+				description: 'Punten.',
+			},
 		])
-
-		if (message.content.toLocaleLowerCase() === '!help') {
-			message.reply(`[
-        {
-          name: 'p',
-          description: 'Muter lagu, tapi P',
-          options: [
-            {
-              name: 'song',
-              type: 'STRING' as const,
-              description: 'Judul terserah. hasil terserah',
-              required: true,
-            },
-          ],
-        },
-        {
-          name: 'j',
-          description: 'Skip skip',
-          options: [
-            {
-              name: 'urutan',
-              type: 'INTEGER' as const,
-              description: 'Lagune ndk setlist nomer piro?',
-              required: true,
-            },
-          ],
-        },
-        {
-          name: 'skip',
-          description: 'Skip to the next song in the queue',
-        },
-        {
-          name: 'q',
-          description: 'Queue dibaca Kiu, bukan Ku Ewe',
-        },
-        {
-          name: 'pause',
-          description: 'Pauses the song that is currently playing',
-        },
-        {
-          name: 'resume',
-          description: 'Resume playback of the current song',
-        },
-        {
-          name: 'dc',
-          description: 'Leave the voice channel',
-        },
-      ]`)
-		}
 
 		await message.reply('Deployed!')
 	}
@@ -337,6 +297,23 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 		} catch (error) {
 			await interaction.editReply(error as string)
 		}
+	} else if (interaction.commandName === 'help') {
+		const embed = new MessageEmbed()
+			.setTitle('Groovy Bootleg Commands')
+			.setColor('YELLOW')
+			.setThumbnail(
+				'https://yt3.ggpht.com/ytc/AKedOLTZlSN-xKAvHVnVfQjn_y1q6XYJADmcERl9s4Qn=s88-c-k-c0x00ffffff-no-rj',
+			)
+			.addFields([
+				{ name: '/p', value: 'Muter lagu, tapi P' },
+				{ name: '/q', value: 'Qiu' },
+				{ name: '/j', value: 'Skip skip' },
+				{ name: '/skip', value: 'Skip' },
+				{ name: '/pause', value: 'Pause' },
+				{ name: '/resume', value: 'Resume' },
+				{ name: '/dc', value: 'Disconnect' },
+			])
+		await interaction.reply({ embeds: [embed] })
 	} else {
 		await interaction.reply('Unknown command')
 	}
@@ -344,4 +321,4 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 
 client.on('error', console.warn)
 
-void client.login(process.env.token)
+void client.login(token)
