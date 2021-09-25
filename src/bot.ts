@@ -195,7 +195,12 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 			})
 			// Enqueue the track and reply a success message to the user
 			subscription.enqueue(track)
-			await interaction.followUp(`Enqueued **${track.title}**`)
+			const embed = new MessageEmbed()
+				.setTitle('Playing')
+				.setColor('PURPLE')
+				.addFields([{ name: 'Enqueued', value: `${track.title}` }])
+
+			await interaction.followUp({ embeds: [embed] })
 		} catch (error) {
 			console.warn(error)
 			await interaction.reply('Failed to play track, please try again later!')
@@ -300,7 +305,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 	} else if (interaction.commandName === 'help') {
 		const embed = new MessageEmbed()
 			.setTitle('Groovy Bootleg Commands')
-			.setColor('YELLOW')
+			.setColor('PURPLE')
 			.setThumbnail(
 				'https://yt3.ggpht.com/ytc/AKedOLTZlSN-xKAvHVnVfQjn_y1q6XYJADmcERl9s4Qn=s88-c-k-c0x00ffffff-no-rj',
 			)

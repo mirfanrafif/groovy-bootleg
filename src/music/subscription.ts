@@ -128,6 +128,10 @@ export class MusicSubscription {
 	 * @param track The track to add to the queue
 	 */
 	public enqueue(track: Track) {
+		// this.queue.length == 0
+		// 	? this.queue.push(track, track)
+		// 	: this.queue.push(track)
+
 		this.queue.push(track)
 		void this.processQueue()
 	}
