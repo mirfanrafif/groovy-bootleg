@@ -18,7 +18,7 @@ import { MusicSubscription } from './music/subscription'
 import { searchVideo } from './lib/search'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
-const { token } = require('../auth.json')
+// const { token } = require('../auth.json')
 
 const client = new Discord.Client({
 	intents: ['GUILD_VOICE_STATES', 'GUILD_MESSAGES', 'GUILDS'],
