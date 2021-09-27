@@ -1,4 +1,5 @@
-import * as dotenv from 'dotenv'
+import { DISCORD_TOKEN } from './config/secret'
+import express, { Request, Response } from 'express'
 import Discord, {
 	Interaction,
 	GuildMember,
@@ -21,6 +22,15 @@ const { token } = require('../auth.json')
 
 const client = new Discord.Client({
 	intents: ['GUILD_VOICE_STATES', 'GUILD_MESSAGES', 'GUILDS'],
+})
+
+const port = process.env.PORT || 3300
+const app = express()
+
+app.use(express.urlencoded({ extended: true }))
+
+app.use('/', (request: Request, response: Response) => {
+	response.sendStatus(200)
 })
 
 client.on('ready', () => {
@@ -326,4 +336,5 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 
 client.on('error', console.warn)
 
-void client.login(token)
+void client.login(DISCORD_TOKEN)
+app.listen(port, () => console.log(`Server started on port ${port}!`))
