@@ -3,14 +3,10 @@
 	"version": "0.0.1",
 	"description": "An example music bot written using @discordjs/voice",
 	"scripts": {
-		"start": "ts-node src/bot.ts",
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"lint": "eslint src --ext .ts",
-		"lint:fix": "eslint src --ext .ts --fix",
-		"prettier": "prettier --write **/*.{ts,js,json,yml,yaml}",
-		"build": "npm run tsc",
-		"build:check": "tsc --noEmit --incremental false",
-		"tsc": "tsc"
+		"build-ts": "tsc",
+		"postinstall": "npm run build-ts",
+		"start": "npm run serve",
+		"serve": "node dist/bot.js"
 	},
 	"engines": {
 		"node": "16.7.0"
