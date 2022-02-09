@@ -12,6 +12,7 @@ import {
 	entersState,
 	joinVoiceChannel,
 	VoiceConnectionStatus,
+	DiscordGatewayAdapterCreator
 } from '@discordjs/voice'
 import { Track } from './music/track'
 import { MusicSubscription } from './music/subscription'
@@ -155,7 +156,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 					joinVoiceChannel({
 						channelId: channel.id,
 						guildId: channel.guild.id,
-						adapterCreator: channel.guild.voiceAdapterCreator,
+						adapterCreator: channel.guild.voiceAdapterCreator as unknown as DiscordGatewayAdapterCreator,
 					}),
 				)
 				subscription.voiceConnection.on('error', console.warn)

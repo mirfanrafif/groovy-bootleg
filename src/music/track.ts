@@ -4,7 +4,7 @@ import {
 	createAudioResource,
 	demuxProbe,
 } from '@discordjs/voice'
-import { raw as ytdl } from 'youtube-dl-exec'
+import { raw as ytdl, YtFlags } from 'youtube-dl-exec'
 import { searchVideo } from '../lib/search'
 // import { Youtube } from 'youtube-api';
 // import { readJson } from 'r-json';
@@ -55,10 +55,8 @@ export class Track implements TrackData {
 			const process = ytdl(
 				this.url,
 				{
-					o: '-',
-					q: '',
-					f: 'bestaudio[ext=webm+acodec=opus+asr=48000]/bestaudio',
-					r: '100K',
+					output: '-',
+					format: 'bestaudio[ext=webm+acodec=opus+asr=48000]/bestaudio'
 				},
 				{ stdio: ['ignore', 'pipe', 'ignore'] },
 			)
